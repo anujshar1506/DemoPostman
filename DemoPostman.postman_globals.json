@@ -1,0 +1,16 @@
+{
+  "id": "13b94234-8825-47e5-8d97-5de59509ca92",
+  "values": [
+    {
+      "key": "URL",
+      "value": "https://sugarqa.gartner.com/rest/v11_1/",
+      "type": "text",
+      "description": "",
+      "enabled": true
+    }
+  ],
+  "name": "DemoPostman Globals",
+  "_postman_variable_scope": "globals",
+  "_postman_exported_at": "2018-09-18T10:52:51.386Z",
+  "_postman_exported_using": "Postman/6.3.0"
+}

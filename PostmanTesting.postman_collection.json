@@ -1,0 +1,194 @@
+{
+	"info": {
+		"_postman_id": "b235dd10-e3c7-4251-bf1c-dd1a6e30e133",
+		"name": "PostmanTesting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AuthToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b95ced14-f72e-4302-a4a0-048d3edda3a7",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsondata = pm.response.json();",
+							"",
+							"var authtoken = jsondata.access_token;",
+							"",
+							"pm.environment.set(\"AuthTokenQA\", authtoken);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"ccraig\",\"password\":\"ccraig@123\",\"navigateToHome\":false,\"showLoginForm\":true,\"client_id\":\"sugar\",\"client_info\":{\"current_language\":\"en_us\"},\"client_secret\":\"\",\"current_language\":\"en_us\",\"grant_type\":\"password\",\"platform\":\"api\"}"
+				},
+				"url": {
+					"raw": "{{URL}}oauth2/token?platform=base",
+					"host": [
+						"{{URL}}oauth2"
+					],
+					"path": [
+						"token"
+					],
+					"query": [
+						{
+							"key": "platform",
+							"value": "base"
+						}
+					]
+				},
+				"description": "Testing Postman"
+			},
+			"response": []
+		},
+		{
+			"name": "Accounts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "98f80011-e400-44d4-ac74-ddfe1d783a38",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsondata = pm.response.json();",
+							"",
+							"pm.environment.set(\"AccountName\", jsondata.records[2].name);",
+							"pm.environment.set(\"AccountID\", jsondata.records[2].id);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "OAuth-Token",
+						"value": "{{AuthTokenQA}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"ccraig\",\"password\":\"ccraig@123\",\"navigateToHome\":false,\"showLoginForm\":true,\"client_id\":\"sugar\",\"client_info\":{\"current_language\":\"en_us\"},\"client_secret\":\"\",\"current_language\":\"en_us\",\"grant_type\":\"password\",\"platform\":\"api\"}"
+				},
+				"url": {
+					"raw": "https://sugarqa.gartner.com/rest/v11_1/Accounts?view=list&max_num=-1&fields=billing_address_country",
+					"protocol": "https",
+					"host": [
+						"sugarqa",
+						"gartner",
+						"com"
+					],
+					"path": [
+						"rest",
+						"v11_1",
+						"Accounts"
+					],
+					"query": [
+						{
+							"key": "view",
+							"value": "list"
+						},
+						{
+							"key": "max_num",
+							"value": "-1"
+						},
+						{
+							"key": "fields",
+							"value": "billing_address_country"
+						}
+					]
+				},
+				"description": "Testing Postman"
+			},
+			"response": []
+		},
+		{
+			"name": "Contacts in Accounts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "679038ac-672e-4ef0-a170-003301a894d7",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"var jsondata = pm.response.json();",
+							"",
+							"pm.environment.set(\"AccountName\", jsondata.records[2].name);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "OAuth-Token",
+						"value": "{{AuthTokenQA}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"ccraig\",\"password\":\"ccraig@123\",\"navigateToHome\":false,\"showLoginForm\":true,\"client_id\":\"sugar\",\"client_info\":{\"current_language\":\"en_us\"},\"client_secret\":\"\",\"current_language\":\"en_us\",\"grant_type\":\"password\",\"platform\":\"api\"}"
+				},
+				"url": {
+					"raw": "{{URL}}Contacts/filter?max_num=10&fields=full_name,title,email,phone_work,phone_work_formatted,ppl_cd,client_type&filter[0][account_id][$equals]={{AccountID}}",
+					"host": [
+						"{{URL}}Contacts"
+					],
+					"path": [
+						"filter"
+					],
+					"query": [
+						{
+							"key": "max_num",
+							"value": "10"
+						},
+						{
+							"key": "fields",
+							"value": "full_name,title,email,phone_work,phone_work_formatted,ppl_cd,client_type"
+						},
+						{
+							"key": "filter[0][account_id][$equals]",
+							"value": "{{AccountID}}"
+						}
+					]
+				},
+				"description": "Testing Postman"
+			},
+			"response": []
+		}
+	]
+}

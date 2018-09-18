@@ -133,11 +133,11 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "679038ac-672e-4ef0-a170-003301a894d7",
+						"id": "3e4dcb95-0f71-487a-b243-6bf438639e3f",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(500);",
+							"    pm.response.to.have.status(200);",
 							"});",
 							"",
 							"var jsondata = pm.response.json();",
